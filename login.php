@@ -1,5 +1,8 @@
 <?php
-session_start();
+
+if (isset($_SESSION['logado'])) {
+    header('Location: index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,12 +25,11 @@ session_start();
             background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
         }
 
-        input{
+        input {
             border-radius: 15px !important;
             padding: 5px !important;
-            
+
         }
-        
     </style>
     <?php include('components/js.php'); ?>
 </head>
@@ -48,7 +50,7 @@ session_start();
                                 <form method="POST" action="actions/actions_login.php">
 
                                     <div class="form-outline form-white mb-4">
-                                        <input type="text" id="usuario" name="usuario"  placeholder="Usuário">
+                                        <input type="text" id="usuario" name="usuario" placeholder="Usuário">
                                     </div>
 
                                     <div class="form-outline form-white mb-4">
@@ -56,9 +58,10 @@ session_start();
                                     </div>
 
                                     <?php
-                                    if (isset($_SESSION["erro"])) {
-                                        echo $_SESSION["erro"];
-                                    };
+                                    if (isset($_SESSION['erro'])) {
+                                        echo "<script>mensagem_erro('" . $_SESSION['erro'] . "')</script>";
+                                        unset($_SESSION['erro']);
+                                    }
                                     ?>
 
                                     <div>
