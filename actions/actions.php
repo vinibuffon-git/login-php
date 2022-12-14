@@ -66,6 +66,47 @@ if ($tipo == 'cliente') {
         }
     }
 
+} else if ($tipo == 'cidades') {
+
+    $id = $_POST["id"];
+    $nome = $_POST["nome"];
+    $uf = $_POST["UF"];
+    //telefone
+    //data nascimento
+
+    if (!isset($nome) || $nome == '') {
+        $_SESSION['erro'] = "Informe um nome para o cliente";
+        header('Location: ../clientes.php');
+        exit();
+    }
+
+    if (!isset($uf) || $uf == '') {
+        $_SESSION['erro'] = "Informe um UF para o cliente";
+        header('Location: ../clientes.php');
+        exit();
+    
+    if (isset($id) && $id != '') {
+        $sql = "UPDATE cidades SET nome = ?, email = ?, telefone = ?, dtnasc = ? WHERE id = ?";
+        $stmt = $conexao->prepare($sql);
+        $return = $stmt->execute([$nome, $email, $telefone, $dtnasc, $id]);
+
+        if ($return) {
+            $_SESSION['sucesso'] = "Cliente alterado com sucesso!";
+            header('Location: ../clientes_lista.php');
+            exit();
+        }
+    } else {
+        $sql = "INSERT INTO clientes (nome, email, telefone, dtnasc) VALUES(?,?,?,?)";
+        $stmt = $conexao->prepare($sql);
+        $return = $stmt->execute([$nome, $email, $telefone, $dtnasc]);
+
+        if ($return) {
+            $_SESSION['sucesso'] = "Cliente incluído com sucesso!";
+            header('Location: ../clientes_lista.php');
+            exit();
+        }
+    }
+
 } else {
     header('Location: ../index.php');
     exit();
