@@ -18,7 +18,6 @@ if (isset($_GET["id"])) {
     $retorno = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($retorno) {
         $cliente = $retorno;
-        $email = $retorno;
     };
 }
 ?>
@@ -35,22 +34,60 @@ if (isset($_GET["id"])) {
     <?php include('components/js.php') ?>
     <?php include('styles/styles_forms.php') ?>
 </head>
+
 <body class="fundo">
     <div class="container">
         <?php include('menu.php') ?>
-        <form>
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>Nome</h4>
-                    <input type="text" class="form-control" value="<?php echo ($cliente != null ? $cliente['nome'] : "") ?>">
-                </div>
-                <div class="col-md-8">
-                    <h4>Email</h4>
-                    <input type="text" class="form-control" value="<?php echo ($email != null ? $email['email'] : "") ?>">
-                </div>
+        <div class="row">
+            <div class="col-sm-12 ">
+                <form method="post" action="actions/actions.php?tipo=cliente">
+                    <input type="hidden" class="form-control" name="id" value="<?php echo ($cliente != null ? $cliente['id'] : '') ?>">
+                    <div class="row mb-3">
+                        <div class="col-sm-6 col-md-4">
+                            <label>Nome</label>
+                            <input type="text" class="form-control" name="nome" placeholder="Nome" value="<?php echo ($cliente != null ? $cliente['nome'] : '') ?>">
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <label>E-mail</label>
+                            <input type="email" class="form-control" name="email" placeholder="E-mail" value="<?php echo ($cliente != null ? $cliente['email'] : '') ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6 col-md-4">
+                            <label>Telefone</label>
+                            <input type="text" class="form-control" name="telefone" placeholder="Telefone" value="<?php echo ($cliente != null ? $cliente['telefone'] : '') ?>">
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <label>Data de Nascimento</label>
+                            <input type="date" class="form-control" name="dtnasc" placeholder="Data de Nasc" value="<?php echo ($cliente != null ? $cliente['dtnasc'] : '') ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6 col-md-4">
+                            <label>Cidade</label>
+                            <select type="text" class="form-control" name="idcidades">
+                                <?php
+                                $stmt = $conexao->prepare("SELECT idcidades, nome FROM cidades ORDER BY nome");
+                                $stmt->execute();
+                                echo "<option value = '0'> Selecione...</option>";
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    if ($cliente != null && $cliente['idcidades'] == $row['idcidades']) {
+                                        echo "<option selected value = '" . $row['idcidades'] . "'>" . $row['nome'] .  "</option>";
+                                    } else {
+                                        echo "<option value='" . $row['idcidades'] . "'>" . $row['nome'] .  "</option>";
+                                    }
+                                }
+                                ?>">
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <input class="btn btn-warning" value="Limpar" type="reset">
+                            <button class="btn btn-primary" type="submit">Salvar</button>
+                        </div>
+                    </div>
             </div>
-        </form>
-
+            </form>
+        </div>
     </div>
 </body>
+
 </html>
