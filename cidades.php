@@ -43,12 +43,12 @@ if (isset($_GET["id"])) {
 
                 <form method="post" action="actions/actions.php?tipo=cidades">
 
-                    <input type="hidden" class="form-control" name="id" value="<?php echo ($cidades != null ? $cidades['idcidades'] : '') ?>">
+                    <input  type="hidden" class="form-control" name="idcidades" value="<?php echo ($cidades != null ? $cidades['idcidades'] : '') ?>">
 
                     <div class="row mb-3">
                         <div class="col-sm-9 col-md-4">
                             <label>Nome</label>
-                            <input type="text" class="form-control" name="nome" placeholder="Nome" value="<?php echo ($cidades != null ? $cidades['nome'] : '') ?>">
+                            <input type="text" autofocus class="form-control" name="nome" placeholder="Nome" value="<?php echo ($cidades != null ? $cidades['nome'] : '') ?>">
                         </div>
                         <div class="col-sm-3 col-md-4">
                             <label>Sigla</label>
@@ -57,7 +57,6 @@ if (isset($_GET["id"])) {
                     </div>
                     <input class="btn btn-warning" value="Limpar" type="reset">
                     <button class="btn btn-primary" type="submit">Salvar</button>
-
                 </form>
 
             </div>

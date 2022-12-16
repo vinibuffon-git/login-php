@@ -12,15 +12,14 @@ if (isset($_GET['tipo']) == false) {
 $tipo = $_GET['tipo'];
 
 //CADASTRO DE CLIENTES
-if ($tipo == 'cliente') {
+if ($tipo == 'clientes') {
 
     $id = $_POST["id"];
     $nome = $_POST["nome"];
     $email = $_POST["email"];
     $telefone = $_POST["telefone"];
     $dtnasc = $_POST["dtnasc"];
-    //telefone
-    //data nascimento
+    $idcidades = $_POST["idcidades"];
 
     if (!isset($nome) || $nome == '') {
         $_SESSION['erro'] = "Informe um nome para o cliente";
@@ -43,11 +42,15 @@ if ($tipo == 'cliente') {
         header('Location: ../clientes.php');
         exit();
     }
-
+    if (!isset($idcidades) || $idcidades == '') {
+        $_SESSION['erro'] = "Informe uma cidade para o cliente";
+        header('Location: ../clientes.php');
+        exit();
+    }
     if (isset($id) && $id != '') {
-        $sql = "UPDATE clientes SET nome = ?, email = ?, telefone = ?, dtnasc = ? WHERE id = ?";
+        $sql = "UPDATE clientes SET nome = ?, email = ?, telefone = ?, dtnasc = ?, idcidades = ? WHERE id = ?";
         $stmt = $conexao->prepare($sql);
-        $return = $stmt->execute([$nome, $email, $telefone, $dtnasc, $id]);
+        $return = $stmt->execute([$nome, $email, $telefone, $dtnasc, $idcidades, $id]);
 
         if ($return) {
             $_SESSION['sucesso'] = "Cliente alterado com sucesso!";
@@ -55,9 +58,9 @@ if ($tipo == 'cliente') {
             exit();
         }
     } else {
-        $sql = "INSERT INTO clientes (nome, email, telefone, dtnasc) VALUES(?,?,?,?)";
+        $sql = "INSERT INTO clientes (nome, email, telefone, dtnasc, idcidades) VALUES(?,?,?,?,?)";
         $stmt = $conexao->prepare($sql);
-        $return = $stmt->execute([$nome, $email, $telefone, $dtnasc]);
+        $return = $stmt->execute([$nome, $email, $telefone, $dtnasc, $idcidades]);
 
         if ($return) {
             $_SESSION['sucesso'] = "Cliente incluído com sucesso!";
@@ -65,48 +68,45 @@ if ($tipo == 'cliente') {
             exit();
         }
     }
-
 } else if ($tipo == 'cidades') {
 
-    $id = $_POST["id"];
+    $id = $_POST["idcidades"];
     $nome = $_POST["nome"];
-    $uf = $_POST["UF"];
-    //telefone
-    //data nascimento
+    $uf = $_POST["uf"];
 
     if (!isset($nome) || $nome == '') {
-        $_SESSION['erro'] = "Informe um nome para o cliente";
-        header('Location: ../clientes.php');
+        $_SESSION['erro'] = "Informe um nome para a cidade";
+        header('Location: ../cidades.php');
         exit();
     }
 
     if (!isset($uf) || $uf == '') {
-        $_SESSION['erro'] = "Informe um UF para o cliente";
-        header('Location: ../clientes.php');
+        $_SESSION['erro'] = "Informe am UF da cidade";
+        header('Location: ../cidades.php');
         exit();
-    
+    }
+
     if (isset($id) && $id != '') {
-        $sql = "UPDATE cidades SET nome = ?, email = ?, telefone = ?, dtnasc = ? WHERE id = ?";
+        $sql = "UPDATE cidades SET nome = ?, uf = ? WHERE idcidades = ?";
         $stmt = $conexao->prepare($sql);
-        $return = $stmt->execute([$nome, $email, $telefone, $dtnasc, $id]);
+        $return = $stmt->execute([$nome, $uf, $id]);
 
         if ($return) {
-            $_SESSION['sucesso'] = "Cliente alterado com sucesso!";
-            header('Location: ../clientes_lista.php');
+            $_SESSION['sucesso'] = "Cidade alterada com sucesso!";
+            header('Location: ../cidades_lista.php');
             exit();
         }
     } else {
-        $sql = "INSERT INTO clientes (nome, email, telefone, dtnasc) VALUES(?,?,?,?)";
+        $sql = "INSERT INTO cidades (nome, uf) VALUES(?,?)";
         $stmt = $conexao->prepare($sql);
-        $return = $stmt->execute([$nome, $email, $telefone, $dtnasc]);
+        $return = $stmt->execute([$nome, $uf]);
 
         if ($return) {
-            $_SESSION['sucesso'] = "Cliente incluído com sucesso!";
-            header('Location: ../clientes_lista.php');
+            $_SESSION['sucesso'] = "Cidade incluída com sucesso!";
+            header('Location: ../cidades_lista.php');
             exit();
         }
     }
-
 } else {
     header('Location: ../index.php');
     exit();

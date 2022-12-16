@@ -16,7 +16,7 @@ $conexao = require('database/config.php');
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
-    <?php include('components/js.php')?>
+    <?php include('components/js.php') ?>
     <?php include('styles/styles_forms.php') ?>
 </head>
 
@@ -38,24 +38,26 @@ $conexao = require('database/config.php');
                         <tr>
                             <th scope="col">Nome</th>
                             <th scope="col">UF</th>
+                            <th scope="col">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                            $stmt = $conexao ->prepare("SELECT * FROM  cidades ORDER BY nome");
-                            $stmt -> execute();
-                            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                                echo "<tr>
-                                        <td>" . $row['nome'] . "</td> 
-                                        <td>" . $row['uf'] . "</td> 
-                                        <td> <a class='btn btn-md btn-success'
-                                        href='cidades.php?id=". $row['id'] . "'>
-                                        <i class='fa fa-edit'></i></a>
-                                        <a class='btn btn-md btn-danger'>
-                                        <i class='fa fa-trash'></i></a>
-                                        </td>
-                                    </tr>";
-                            };
+                        $stmt = $conexao->prepare("SELECT * FROM cidades ORDER BY nome");
+                        $stmt->execute();
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo "<tr>
+                                <td>" . $row['nome'] . "</td> 
+                                <td>" . $row['uf'] . "</td> 
+                                <td> <a class='btn btn-md btn-success'
+                                href='cidades.php?id=" . $row['idcidades'] . "'>
+                                <i class='fa fa-edit'></i></a>
+                                <a class='btn btn-md btn-danger'
+                                href = 'actions/delete.php?id=" . $row['idcidades'] . "&tabela=cidades' .>
+                                <i class='fa fa-trash'></i></a>
+                                </td>
+                            </tr>";
+                        };
                         ?>
                     </tbody>
                 </table>
@@ -63,7 +65,7 @@ $conexao = require('database/config.php');
             <div class="col-md-2"></div>
         </div>
         <script src="JS/scripts.js"></script>
-    </div>   
+    </div>
 </body>
 
 </html>

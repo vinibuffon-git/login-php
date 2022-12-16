@@ -53,7 +53,7 @@ $conexao = require('database/config.php');
                                         href='clientes.php?id=" . $row['id'] . "'>
                                         <i class='fa fa-edit'></i></a>
                                         <a class='btn btn-md btn-danger'
-                                        href = 'actions/delete.php?id=" . $row['id'] . "' .>
+                                        href = 'actions/delete.php?id=" . $row['id'] . "&tabela=clientes' .>
                                         <i class='fa fa-trash'></i></a>
                                         </td>
                                     </tr>";

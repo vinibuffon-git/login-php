@@ -1,5 +1,5 @@
 <style>
     .fundo{
-        background-color: burlywood;
+        background-color: rgb(255, 255, 255);
     }
 </style>

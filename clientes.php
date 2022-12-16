@@ -40,12 +40,12 @@ if (isset($_GET["id"])) {
         <?php include('menu.php') ?>
         <div class="row">
             <div class="col-sm-12 ">
-                <form method="post" action="actions/actions.php?tipo=cliente">
+                <form method="post" action="actions/actions.php?tipo=clientes">
                     <input type="hidden" class="form-control" name="id" value="<?php echo ($cliente != null ? $cliente['id'] : '') ?>">
                     <div class="row mb-3">
                         <div class="col-sm-6 col-md-4">
                             <label>Nome</label>
-                            <input type="text" class="form-control" name="nome" placeholder="Nome" value="<?php echo ($cliente != null ? $cliente['nome'] : '') ?>">
+                            <input type="text" autofocus class="form-control" name="nome" placeholder="Nome" value="<?php echo ($cliente != null ? $cliente['nome'] : '') ?>">
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <label>E-mail</label>
